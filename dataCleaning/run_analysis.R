@@ -43,6 +43,7 @@ colnames(subject_merged) = "subject"
 data_combined = cbind(X_merged[, mean_std_rows], y_merged, subject_merged)
 
 result = aggregate(data_combined, by=list(activity_label = data_combined$activity_label, subject=data_combined$subject), mean)
-result[,69] = factor(result$activity_label, levels = activity_lables[,1], labels = activity_lables[,2])
+result[,1] = factor(result$activity_label, levels = activity_lables[,1], labels = activity_lables[,2])
+result[,c(69,70)] = NULL
 
 write.table(result, "../tidy_data.txt", row.name=FALSE)
