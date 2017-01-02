@@ -27,7 +27,7 @@ measurments_mean_std_only = measurements[mean_std_rows]
 ### Question 3: Uses descriptive activity names to name the activities in the data set
 
 activity_lables = read.table("activity_labels.txt")
-y_merged[,1] = factor(y_merged[,1], levels = activity_lables[,1], labels = activity_lables[,2])
+
 
 ### Question 4: Appropriately labels the data set with descriptive variable names.
 
@@ -44,7 +44,6 @@ colnames(subject_merged) = "subject"
 data_combined = cbind(X_merged[, mean_std_rows], y_merged, subject_merged)
 
 result = aggregate(data_combined, by=list(activity_label = data_combined$activity_label, subject=data_combined$subject), mean)
-result$activity_label = NULL
-result$subject = NULL
+result[,69] = factor(result$activity_label, levels = activity_lables[,1], labels = activity_lables[,2])
 
 write.table(result, "../tidy_data.txt", row.name=FALSE)
